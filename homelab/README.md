@@ -9,4 +9,4 @@ Public-safe write-ups of homelab security work. Each initiative has a codeword. 
 | chaff | Honeypot | none yet |
 | firecontrol | Detection | none yet |
 
-Each note follows [`templates/homelab-writeup.md`](../templates/homelab-writeup.md) and the [publication policy](../docs/publication-policy.md).
+Each note follows [`templates/homelab-writeup.md`](../templates/homelab-writeup.md).
