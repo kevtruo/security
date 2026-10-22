@@ -3,7 +3,7 @@
 Public security notes. Two kinds of material live here:
 
 - **Homelab security**: public-safe write-ups of the security work in my homelab, such as change control, cloud identity, and detection. These build on the initiatives in [kevtruo/homelab](https://github.com/kevtruo/homelab).
-- **Security analysis**: standalone notes on tools, vulnerabilities, techniques, and standards.
+- **Security analysis**: attack observations, one folder per attack, each holding a summary and its evidence.
 
 Nothing here is a live configuration. Notes describe patterns and decisions, not the exact setup of any system.
 
@@ -12,9 +12,8 @@ Nothing here is a live configuration. Notes describe patterns and decisions, not
 | Path | Contents |
 |---|---|
 | [`homelab/`](homelab/) | Homelab security write-ups, grouped by initiative |
-| [`analysis/`](analysis/) | Standalone security analysis notes |
+| [`analysis/`](analysis/) | One folder per attack observation, holding its `honeypot-attack-summary.md` and all supporting evidence |
 | [`templates/`](templates/) | Starting points for new notes |
-| [`docs/publication-policy.md`](docs/publication-policy.md) | What may and may not be published here, and the placeholders to use |
 
 ## Status markers
 
@@ -27,7 +26,7 @@ Every note states one status near the top:
 
 ## Before you publish
 
-Read [`docs/publication-policy.md`](docs/publication-policy.md). Run the checks in it before every push.
+Work through the public-safety checklist in the [pull request template](.github/pull_request_template.md) before every merge.
 
 ## Reporting a problem
 

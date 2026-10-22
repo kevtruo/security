@@ -123,11 +123,11 @@ Each of the 46 pairs was tried exactly once with no retries, so it's possible a 
 
 ## Appendix A: Evidence
 
-Each exhibit links to the raw text output of the query beneath it, captured on the sensor. The queries assume the default Cowrie log directory, `/srv/cowrie/var/log/cowrie`. [`SHA256SUMS`](2026-10-18-ssh-brute-force-mysql-default-creds/SHA256SUMS) lists a hash for each output file.
+Each exhibit links to the raw text output of the query beneath it, captured on the sensor. The queries assume the default Cowrie log directory, `/srv/cowrie/var/log/cowrie`. [`SHA256SUMS`](SHA256SUMS) lists a hash for each output file.
 
 ### Exhibit 1: Event log for session `cadf2304c7ee`
 
-Output: [`ex1-session.txt`](2026-10-18-ssh-brute-force-mysql-default-creds/ex1-session.txt)
+Output: [`ex1-session.txt`](ex1-session.txt)
 
 ```bash
 jq -c 'select(.session=="cadf2304c7ee")|{timestamp,eventid,src_ip,username,password,input}' cowrie.json.2026-10-18
@@ -135,7 +135,7 @@ jq -c 'select(.session=="cadf2304c7ee")|{timestamp,eventid,src_ip,username,passw
 
 ### Exhibit 2: Activity totals and credential attempts
 
-Output: [`ex2-credentials.txt`](2026-10-18-ssh-brute-force-mysql-default-creds/ex2-credentials.txt)
+Output: [`ex2-credentials.txt`](ex2-credentials.txt)
 
 ```bash
 IP=77.239.124.204
@@ -145,7 +145,7 @@ jq -r --arg ip $IP 'select(.src_ip==$ip and (.eventid|startswith("cowrie.login")
 
 ### Exhibit 3: SSH client fingerprint
 
-Output: [`ex3-fingerprint.txt`](2026-10-18-ssh-brute-force-mysql-default-creds/ex3-fingerprint.txt)
+Output: [`ex3-fingerprint.txt`](ex3-fingerprint.txt)
 
 ```bash
 jq -r --arg ip $IP 'select(.src_ip==$ip and (.eventid=="cowrie.client.version" or .eventid=="cowrie.client.kex"))|(.version // .hassh)' cowrie.json.2026-10-18 | sort | uniq -c
@@ -153,7 +153,7 @@ jq -r --arg ip $IP 'select(.src_ip==$ip and (.eventid=="cowrie.client.version" o
 
 ### Exhibit 4: Firewall summary (ports, first and last seen)
 
-Output: [`ex4-firewall.txt`](2026-10-18-ssh-brute-force-mysql-default-creds/ex4-firewall.txt)
+Output: [`ex4-firewall.txt`](ex4-firewall.txt)
 
 ```bash
 zcat -f /var/log/dshield.log* | grep "SRC=$IP " | grep -oE "DPT=[0-9]+" | sort | uniq -c | sort -rn
@@ -162,7 +162,7 @@ zcat -f /var/log/dshield.log* | grep "SRC=$IP " | awk '{print $1}' | sort -n | s
 
 ### Exhibit 5: TTY replay of session `cadf2304c7ee`
 
-Output: [`ex5-tty-replay.txt`](2026-10-18-ssh-brute-force-mysql-default-creds/ex5-tty-replay.txt)
+Output: [`ex5-tty-replay.txt`](ex5-tty-replay.txt)
 
 The recording is 202 bytes and holds two records. The first is the attacker's input, `uname -s -v -n -r -m`. The second is the emulated response Cowrie returned:
 
