@@ -1,0 +1,8 @@
+{"timestamp":"2026-10-18T05:30:09.792470Z","eventid":"cowrie.session.connect","src_ip":"77.239.124.204","username":null,"password":null,"input":null}
+{"timestamp":"2026-10-18T05:30:11.283800Z","eventid":"cowrie.client.version","src_ip":"77.239.124.204","username":null,"password":null,"input":null}
+{"timestamp":"2026-10-18T05:30:11.284326Z","eventid":"cowrie.client.kex","src_ip":"77.239.124.204","username":null,"password":null,"input":null}
+{"timestamp":"2026-10-18T05:30:23.196311Z","eventid":"cowrie.login.success","src_ip":"77.239.124.204","username":"mysql","password":"mysql","input":null}
+{"timestamp":"2026-10-18T05:30:29.946315Z","eventid":"cowrie.session.params","src_ip":"77.239.124.204","username":null,"password":null,"input":null}
+{"timestamp":"2026-10-18T05:30:29.946719Z","eventid":"cowrie.command.input","src_ip":"77.239.124.204","username":null,"password":null,"input":"uname -s -v -n -r -m"}
+{"timestamp":"2026-10-18T05:30:33.477961Z","eventid":"cowrie.log.closed","src_ip":"77.239.124.204","username":null,"password":null,"input":null}
+{"timestamp":"2026-10-18T05:30:33.478538Z","eventid":"cowrie.session.closed","src_ip":"77.239.124.204","username":null,"password":null,"input":null}
