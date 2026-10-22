@@ -1,0 +1,29 @@
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+credentials*
+*.kdbx
+
+# Infrastructure state and plans (can hold secrets)
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform/
+
+# Raw captures and logs: scrub before publishing
+*.pcap
+*.pcapng
+*.log
+raw/
+
+# Editor and OS files
+.DS_Store
+.vscode/
+.idea/
+*.swp
