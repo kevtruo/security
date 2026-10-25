@@ -28,6 +28,10 @@ Every note states one status near the top:
 
 Work through the public-safety checklist in the [pull request template](.github/pull_request_template.md) before every merge.
 
+## AI-assisted changes
+
+Pull requests opened by [`claude-coworker`](https://github.com/claude-coworker) are written by Claude Code sessions. That account is a machine account operated by @kevtruo and is not affiliated with Anthropic. It cannot merge: every change needs @kevtruo's review and approval first.
+
 ## Reporting a problem
 
 See [`SECURITY.md`](SECURITY.md).
