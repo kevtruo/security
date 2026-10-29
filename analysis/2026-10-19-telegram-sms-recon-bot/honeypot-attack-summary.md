@@ -24,7 +24,7 @@ The same command sequence was published in a SANS ISC guest diary in April 2026 
 | Geolocation | GB | KR |
 | Reputation | SANS ISC [2]: no prior reports | SANS ISC [2]: no prior reports |
 
-Unlike scanners rented from hosting providers, both sources sit on large consumer ISPs, and neither IP had prior SANS ISC reports. That pattern fits a botnet running on infected home routers or PCs. *This is an inference; the ISP data doesn't confirm it.*
+Unlike scanners rented from hosting providers, both sources sit on large consumer ISPs, and neither IP had prior SANS ISC reports. That pattern is consistent with a botnet running on compromised home routers or PCs.
 
 ## 3. Timeline (UTC)
 
@@ -73,7 +73,7 @@ The `libssh2` banner points to a scripted client built on the libssh2 library ra
 | 81.97.108.152 | `pi/pi`, `pi/raspberry`, `pi/5nWt3P-fF4WosQm5O`, `pi/FAqY7=MZk66k-ob3Rmk` | **`baikal/baikal`** |
 | 125.140.145.62 | `root/root` | **`root/admin`** |
 
-`pi/raspberry` is the historic Raspberry Pi OS default, `root/admin` is a common vendor default, and `baikal/baikal` is a username-as-password guess. The two random-looking `pi` passwords look like entries from leaked credential lists. *That's an inference.*
+`pi/raspberry` is the historic Raspberry Pi OS default, `root/admin` is a common vendor default, and `baikal/baikal` is a username-as-password guess. The two random-looking `pi` passwords are consistent with entries from leaked credential lists.
 
 **Commands executed** (identical in both sessions):
 
@@ -112,7 +112,7 @@ The `libssh2` banner points to a scripted client built on the libssh2 library ra
   4. **Resource triage.** It checks the CPU and looks for competing miners before deciding whether the machine is worth mining on.
 - **Automation:** The nine commands ran at a steady interval, about 0.43 s apart in one session and 0.68 s in the other. Each command ran over its own SSH exec channel, where a person typing would use one interactive shell. The command list was identical across IPs, dates and credentials. And the bot ran the `tdata` and modem checks even after `/ip cloud print` had already failed. All of this indicates an automated script, not a person at a keyboard.
 - **Would it succeed against a vulnerable system?** Yes, for reconnaissance; theft would be the next step. On a device that accepts these default credentials and has Telegram Desktop or an SMS modem, the script would find them. The ISC diary concludes that the likely next step is to compress and upload the session data [1]; this bot never reached that step. The script itself is well built: it probes MikroTik, Linux servers and cellular IoT devices in one pass and tolerates failed commands. Nothing suggests the attacker made a mistake.
-- **Honeypot detection:** The last command, `echo Hi | cat -n`, has no use except checking the shell's behavior. Real GNU `cat -n` prints the line number, a **tab** and the text (`     1\tHi`). Cowrie's recorded reply (Exhibit 3b) uses **two spaces** instead of the tab (`20 20` rather than `09`) and sends the number and the text as separate writes. A script comparing the reply byte for byte would see the difference. Two other giveaways appear in the evidence: Cowrie returned byte-identical `ifconfig` and `/proc/cpuinfo` output to both visitors, and the emulated IPv6 address uses `fe77::`, which isn't a valid link-local prefix (real ones start with `fe80::`). Both bots disconnected without any further action. The ISC diary describes this command as shell verification [1]. I can't tell from the logs whether the bot judged the reply wrong or simply had nothing left to do, since its file checks all came back empty.
+- **Honeypot detection:** The last command, `echo Hi | cat -n`, has no use except checking the shell's behavior. Real GNU `cat -n` prints the line number, a **tab** and the text (`     1\tHi`). Cowrie's recorded reply (Exhibit 3b) uses **two spaces** instead of the tab (`20 20` rather than `09`) and sends the number and the text as separate writes. A script comparing the reply byte for byte would see the difference. Two other giveaways appear in the evidence: Cowrie returned byte-identical `ifconfig` and `/proc/cpuinfo` output to both visitors, and the emulated IPv6 address uses `fe77::`, which isn't a valid link-local prefix (real ones start with `fe80::`). Both bots disconnected without any further action. The ISC diary describes this command as shell verification [1]. Because every file check had already come back empty, the bot had no target data to pursue regardless of how it scored the reply.
 - **Prevention:** No software upgrade fixes this, because the vulnerable component is the configuration, not a version.
 
 | Layer | Control | Prevents | MITRE mitigation [4] |
@@ -121,7 +121,7 @@ The `libssh2` banner points to a scripted client built on the libssh2 library ra
 | SSH | `PasswordAuthentication no` (keys only); `PermitRootLogin no`; `AllowUsers` limited to named admins | Password guessing entirely | M1042 Disable or Remove Feature, M1026 Privileged Account Management |
 | SSH | Require MFA (FIDO2 `sk` keys or TOTP) for interactive logins | Use of a guessed or leaked credential alone | M1032 Multi-factor Authentication |
 | Network | Don't expose SSH to the internet; use a VPN, bastion host or session manager, or restrict source IPs | The bot ever reaching the login prompt | M1035 Limit Access to Resource Over Network |
-| Routers / IoT | MikroTik: disable services you don't use and restrict management access to trusted networks. Cellular routers: change defaults and keep firmware current. | Router and modem recruitment | M1042, M1051 Update Software |
+| Routers / IoT | MikroTik: disable unused services and restrict management access to trusted networks. Cellular routers: change defaults and keep firmware current. | Router and modem recruitment | M1042, M1051 Update Software |
 | Telegram | Review **Settings > Devices** (active sessions) and end unknown sessions; set a cloud password (2FA); monitor non-Telegram processes reading `tdata` [1] | Reuse of a stolen session | M1032 |
 | Detection | Alert on a new login followed within seconds by `tdata`, `ttyGSM`/`smsd`, `[Mm]iner` or `/ip cloud print` | Unnoticed reconnaissance | — |
 
@@ -144,7 +144,7 @@ The source IPs are residential and may be reassigned, so the HASSH and command s
 ## 10. Confidence and gaps
 
 - **Verified from logs:** the credentials, the commands and their order, the timing, the SSH fingerprint, the firewall totals, and the byte-level `cat -n` response. Appendix A has the query and raw output for each.
-- **Inferred:** that the sources are compromised home devices; that the bot recognized the honeypot; what the attacker would have done next (from the ISC diary [1], not observed here).
+- **Assessed from indirect evidence:** that the sources are compromised home devices (ISP type and absence of prior reports); that the bot recognized the honeypot (the `cat -n` response); and the likely next stage, exfiltration of session data, which is documented in the ISC diary [1] and was not reached on this sensor.
 - **Retention limits the retrospective view.** The sensor keeps about 8 days of Cowrie logs, so the search for other sessions running this script (Exhibit 6) covers only 2026-10-19 onward. The firewall history (Exhibit 5) goes back to August 2026.
 - **Third-party data:** the WHOIS, RIPEstat, SANS ISC and AbuseIPDB fields were retrieved on 2026-10-26 and may change.
 
