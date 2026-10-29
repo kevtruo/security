@@ -1,15 +1,12 @@
 # Honeypot Attack Summary: SSH Brute Force from 77.239.124.204
 
-Date: 2026-10-21 (attack observed 2026-10-18 UTC)
-Status: Verified (from the sensor's Cowrie and firewall logs; see Appendix A)
-Tags: honeypot, Cowrie, DShield, SSH brute force, default credentials, MITRE ATT&CK
-
 | | |
 |---|---|
+| **Date** | 2026-10-21 (attack observed 2026-10-18 UTC)
 | **Sensor** | DShield honeypot (Cowrie) on a cloud VM |
 | **Data sources** | Cowrie JSON logs, DShield firewall log, Cowrie TTY recording, AbuseIPDB, RIPE WHOIS |
 
-## 1. Executive summary
+## 1. Summary
 
 On 2026-10-18, 77.239.124.204 ran an automated SSH brute-force attack against the honeypot. It tried 46 username/password pairs over about 10 minutes. The 46th, `mysql/mysql`, succeeded. Six seconds later the attacker ran a single system-fingerprinting command (`uname -s -v -n -r -m`) and disconnected. It downloaded no malware and set up no persistence.
 
