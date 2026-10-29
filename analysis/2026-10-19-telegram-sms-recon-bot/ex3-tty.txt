@@ -1,0 +1,283 @@
+# strings -n 2 output of Cowrie TTY logs (input + emulated responses). Short tokens like 'j2' or '_q' are ttylog record headers. Network identifiers redacted.
+===== session c5f4f73f7da5 (tty b846225e0081fa9151eb29ac62be1dea60bb9c567dba6c3ca3b1c6169b6d750d)
+j2
+/ip cloud print
+-bash: /ip: No such file or directory
+jn
+===== session c5f4f73f7da5 (tty 1d6f385dd0e7ccc3ada3e24e973fd850470dbb222547ea0c1cb7c9f6d9e1dc5e)
+ifconfig
+jSh
+eth0      Link encap:Ethernet  HWaddr <redacted-mac>
+          inet addr:<redacted>  Bcast:<redacted>  Mask:255.255.255.0
+          inet6 addr: fe77::201:7fff:fec9:ae01/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:108578 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:13673 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:95006259 (95.0 MB)  TX bytes:11963894 (12.0 MB)
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:11727 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:11727 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:10261229 (10.3 MB)  TX bytes:10261229 (10.3 MB)
+C	
+===== session c5f4f73f7da5 (tty 28ba533b0f3c4df63d6b4a5ead73860697bdf735bb353e4ca928474889eb8a15)
+_q
+_q
+uname -a
+_q
+Linux svr04 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+_q
+===== session c5f4f73f7da5 (tty 52a532334011a67d1c41a57eea38ed25893bff4b6c264c748c3f2df576a47f4a)
+jXu
+cat /proc/cpuinfo
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+j$
+model name	: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+jH
+stepping	: 1
+jk
+microcode	: 0xb000040
+cpu MHz		: 2399.998
+cache size	: 35840 KB
+physical id	: 0
+siblings	: 2
+j#
+core id		: 0
+jC
+cpu cores	: 2
+je
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+j/
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single pti tpr_shadow vnmi flexpriority ept vpid fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap xsaveopt arat
+jW
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit mmio_stale_data retbleed
+jz
+bogomips	: 4799.99
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 46 bits physical, 48 bits virtual
+power management:
+jJ
+jp
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+model name	: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+stepping	: 1
+jA
+microcode	: 0xb000040
+jf
+cpu MHz		: 2399.998
+cache size	: 35840 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+j5
+apicid		: 1
+jW
+initial apicid	: 1
+j{
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single pti tpr_shadow vnmi flexpriority ept vpid fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap xsaveopt arat
+j+
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit mmio_stale_data retbleed
+jO
+bogomips	: 4799.99
+jp
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 46 bits physical, 48 bits virtual
+power management:
+jfn
+===== session c5f4f73f7da5 (tty 4e9fdfe29ef2ada08ab1e29f7b3ef7d297dfa86d002069289e7a7ae21b343904)
+ps | grep '[Mm]iner'
+===== session c5f4f73f7da5 (tty e5cefcb1b141654b896106c8dc78ae972511ca8772b28e593dbe256993fa8437)
+j	
+ps -ef | grep '[Mm]iner'
+===== session c5f4f73f7da5 (tty 722079119c91e28374578deb867362aea3f1e9381c78fc96d6228dc393ea6c05)
+ja
+ls -la ~/.local/share/TelegramDesktop/tdata /home/*/.local/share/TelegramDesktop/tdata /dev/ttyGSM* /dev/ttyUSB-mod* /var/spool/sms/* /var/log/smsd.log /etc/smsd.conf* /usr/bin/qmuxd /var/qmux_connect_socket /etc/config/simman /dev/modem* /var/config/sms/*
+ls: cannot access /root/.local/share/TelegramDesktop/tdata: No such file or directory
+j{%
+ls: cannot access /home/*/.local/share/TelegramDesktop/tdata: No such file or directory
+ls: cannot access /dev/ttyGSM*: No such file or directory
+ls: cannot access /dev/ttyUSB-mod*: No such file or directory
+jI&
+ls: cannot access /var/spool/sms/*: No such file or directory
+j|&
+ls: cannot access /var/log/smsd.log: No such file or directory
+ls: cannot access /etc/smsd.conf*: No such file or directory
+j"'
+ls: cannot access /usr/bin/qmuxd: No such file or directory
+jW'
+ls: cannot access /var/qmux_connect_socket: No such file or directory
+ls: cannot access /etc/config/simman: No such file or directory
+ls: cannot access /dev/modem*: No such file or directory
+ls: cannot access /var/config/sms/*: No such file or directory
+j/
+===== session c5f4f73f7da5 (tty 3fabfde4895f276b5d2448dc4d097af08b38b65d732145b525aab43e562d6bfa)
+j-K
+locate D877F783D5D3EF8Cs
+===== session c5f4f73f7da5 (tty 3e8341eade715d716ae9fe37db380fb9cab5f953782fe691fcf3af29041a344e)
+echo Hi | cat -n
+     1  
+j5
+Hi
+===== session 913abb59974b (tty b846225e0081fa9151eb29ac62be1dea60bb9c567dba6c3ca3b1c6169b6d750d)
+j2
+/ip cloud print
+-bash: /ip: No such file or directory
+jn
+===== session 913abb59974b (tty 1d6f385dd0e7ccc3ada3e24e973fd850470dbb222547ea0c1cb7c9f6d9e1dc5e)
+ifconfig
+jSh
+eth0      Link encap:Ethernet  HWaddr <redacted-mac>
+          inet addr:<redacted>  Bcast:<redacted>  Mask:255.255.255.0
+          inet6 addr: fe77::201:7fff:fec9:ae01/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:108578 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:13673 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:95006259 (95.0 MB)  TX bytes:11963894 (12.0 MB)
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:11727 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:11727 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:10261229 (10.3 MB)  TX bytes:10261229 (10.3 MB)
+C	
+===== session 913abb59974b (tty 28ba533b0f3c4df63d6b4a5ead73860697bdf735bb353e4ca928474889eb8a15)
+_q
+_q
+uname -a
+_q
+Linux svr04 6.1.0-21-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.90-1 (2024-05-03) x86_64 GNU/Linux
+_q
+===== session 913abb59974b (tty 52a532334011a67d1c41a57eea38ed25893bff4b6c264c748c3f2df576a47f4a)
+jXu
+cat /proc/cpuinfo
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+j$
+model name	: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+jH
+stepping	: 1
+jk
+microcode	: 0xb000040
+cpu MHz		: 2399.998
+cache size	: 35840 KB
+physical id	: 0
+siblings	: 2
+j#
+core id		: 0
+jC
+cpu cores	: 2
+je
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+j/
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single pti tpr_shadow vnmi flexpriority ept vpid fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap xsaveopt arat
+jW
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit mmio_stale_data retbleed
+jz
+bogomips	: 4799.99
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 46 bits physical, 48 bits virtual
+power management:
+jJ
+jp
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 79
+model name	: Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz
+stepping	: 1
+jA
+microcode	: 0xb000040
+jf
+cpu MHz		: 2399.998
+cache size	: 35840 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+j5
+apicid		: 1
+jW
+initial apicid	: 1
+j{
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 20
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon rep_good nopl xtopology cpuid tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single pti tpr_shadow vnmi flexpriority ept vpid fsgsbase bmi1 hle avx2 smep bmi2 erms invpcid rtm rdseed adx smap xsaveopt arat
+j+
+bugs		: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs taa itlb_multihit mmio_stale_data retbleed
+jO
+bogomips	: 4799.99
+jp
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 46 bits physical, 48 bits virtual
+power management:
+jfn
+===== session 913abb59974b (tty 4e9fdfe29ef2ada08ab1e29f7b3ef7d297dfa86d002069289e7a7ae21b343904)
+ps | grep '[Mm]iner'
+===== session 913abb59974b (tty e5cefcb1b141654b896106c8dc78ae972511ca8772b28e593dbe256993fa8437)
+j	
+ps -ef | grep '[Mm]iner'
+===== session 913abb59974b (tty 722079119c91e28374578deb867362aea3f1e9381c78fc96d6228dc393ea6c05)
+ja
+ls -la ~/.local/share/TelegramDesktop/tdata /home/*/.local/share/TelegramDesktop/tdata /dev/ttyGSM* /dev/ttyUSB-mod* /var/spool/sms/* /var/log/smsd.log /etc/smsd.conf* /usr/bin/qmuxd /var/qmux_connect_socket /etc/config/simman /dev/modem* /var/config/sms/*
+ls: cannot access /root/.local/share/TelegramDesktop/tdata: No such file or directory
+j{%
+ls: cannot access /home/*/.local/share/TelegramDesktop/tdata: No such file or directory
+ls: cannot access /dev/ttyGSM*: No such file or directory
+ls: cannot access /dev/ttyUSB-mod*: No such file or directory
+jI&
+ls: cannot access /var/spool/sms/*: No such file or directory
+j|&
+ls: cannot access /var/log/smsd.log: No such file or directory
+ls: cannot access /etc/smsd.conf*: No such file or directory
+j"'
+ls: cannot access /usr/bin/qmuxd: No such file or directory
+jW'
+ls: cannot access /var/qmux_connect_socket: No such file or directory
+ls: cannot access /etc/config/simman: No such file or directory
+ls: cannot access /dev/modem*: No such file or directory
+ls: cannot access /var/config/sms/*: No such file or directory
+j/
+===== session 913abb59974b (tty 3fabfde4895f276b5d2448dc4d097af08b38b65d732145b525aab43e562d6bfa)
+j-K
+locate D877F783D5D3EF8Cs
+===== session 913abb59974b (tty 3e8341eade715d716ae9fe37db380fb9cab5f953782fe691fcf3af29041a344e)
+echo Hi | cat -n
+     1  
+j5
+Hi
