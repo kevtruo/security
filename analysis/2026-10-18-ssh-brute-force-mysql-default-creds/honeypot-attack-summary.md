@@ -66,7 +66,7 @@ The `SSH-2.0-Go` banner shows a custom tool built on Go's `golang.org/x/crypto/s
 
 ## 6. Credentials attempted
 
-Each of the 46 pairs was tried exactly once with no retries, so it's possible a shared wordlist was split across bot nodes.
+Each of the 46 pairs was tried exactly once with no retries, a pattern consistent with a shared wordlist split across bot nodes.
 
 | Category | Examples |
 |---|---|
@@ -88,8 +88,8 @@ Each of the 46 pairs was tried exactly once with no retries, so it's possible a 
 
 - **Purpose:** The attacker left right after `uname`. It recorded OS, kernel, hostname and CPU architecture, which a later stage could use to pick a matching payload; access could also be resold.
 - **Automation:** The parallel sessions, constant 2–5 second cadence, single-attempt wordlist and Go SSH library fingerprint indicate that an automated tool was used.
-- **Coordinated infrastructure:** The neighboring IP **77.239.124.64** sent almost the same firewall traffic (1,498 packets, all TCP/22) and generated 4,848 Cowrie log lines on 2026-10-19. Two addresses in the same newly allocated /24 attacking on consecutive days suggests one operation. The two IPs' SSH client fingerprints were not compared, so this link is not confirmed.
-- **Separate actor:** The `sshd` malware drop and the 30 MB upload on the same day came from **114.130.253.3**, a different actor. They're out of scope for this report.
+- **Coordinated infrastructure:** The neighboring IP **77.239.124.64** sent almost the same firewall traffic (1,498 packets, all TCP/22) and generated 4,848 Cowrie log lines on 2026-10-19. Two addresses in the same newly allocated /24 attacking on consecutive days indicates a single operation. This attribution rests on network and traffic similarity; the SSH client fingerprints of the two addresses were not compared.
+- **Separate actor:** The `sshd` malware drop and the 30 MB upload on the same day came from **114.130.253.3**, a different actor, and are not covered in this report.
 
 ## 9. Indicators of compromise
 
