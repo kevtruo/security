@@ -103,17 +103,38 @@ The `libssh2` banner points to a scripted client built on the libssh2 library ra
 
 ## 8. Analysis
 
-- **Why it matters:** A copied Telegram `tdata` folder lets an attacker sign in as the victim without the password or 2FA code. An SMS-capable device can send spam or receive one-time codes for password resets. The attack needs no exploit, only a default password. It finishes in seconds and runs from home-broadband IPs that don't look like attack infrastructure. Any Linux box, router or IoT device left with default SSH credentials is a candidate, and losing a messaging account or an SMS channel is harder to undo than removing a cryptominer.
-- **Vulnerability:** **No CVE applies.** The attack exploits a configuration weakness, not a software flaw: **CWE-1392: Use of Default Credentials** and **CWE-521: Weak Password Requirements** [3]. The technique is documented as MITRE ATT&CK T1078.001 [4].
-- **Purpose:** The script inventories a target for theft and abuse:
-  1. **Telegram account takeover.** It looks for `tdata` to copy and reuse the session from the attacker's machine. The ISC diary calls this a long-term asset, compared with the short-term gain of cryptojacking [1].
-  2. **SMS/cellular abuse.** It looks for GSM/LTE modems and SMS daemons, which can send spam or intercept SMS codes and so defeat SMS-based 2FA and password resets [1].
-  3. **Router recruitment.** It identifies MikroTik devices, which are common botnet targets.
-  4. **Resource triage.** It checks the CPU and looks for competing miners before deciding whether the machine is worth mining on.
-- **Automation:** The nine commands ran at a steady interval, about 0.43 s apart in one session and 0.68 s in the other. Each command ran over its own SSH exec channel, where a person typing would use one interactive shell. The command list was identical across IPs, dates and credentials. And the bot ran the `tdata` and modem checks even after `/ip cloud print` had already failed. All of this indicates an automated script, not a person at a keyboard.
-- **Would it succeed against a vulnerable system?** Yes, for reconnaissance; theft would be the next step. On a device that accepts these default credentials and has Telegram Desktop or an SMS modem, the script would find them. The ISC diary concludes that the likely next step is to compress and upload the session data [1]; this bot never reached that step. The script itself is well built: it probes MikroTik, Linux servers and cellular IoT devices in one pass and tolerates failed commands. Nothing suggests the attacker made a mistake.
-- **Honeypot detection:** The last command, `echo Hi | cat -n`, has no use except checking the shell's behavior. Real GNU `cat -n` prints the line number, a **tab** and the text (`     1\tHi`). Cowrie's recorded reply (Exhibit 3b) uses **two spaces** instead of the tab (`20 20` rather than `09`) and sends the number and the text as separate writes. A script comparing the reply byte for byte would see the difference. Two other giveaways appear in the evidence: Cowrie returned byte-identical `ifconfig` and `/proc/cpuinfo` output to both visitors, and the emulated IPv6 address uses `fe77::`, which isn't a valid link-local prefix (real ones start with `fe80::`). Both bots disconnected without any further action. The ISC diary describes this command as shell verification [1]. Because every file check had already come back empty, the bot had no target data to pursue regardless of how it scored the reply.
-- **Prevention:** No software upgrade fixes this, because the vulnerable component is the configuration, not a version.
+**Relevance:** 
+- A copied Telegram `tdata` folder lets an attacker sign in as the victim without the password or 2FA code. An SMS-capable device can send spam or receive one-time codes for password resets. The attack doesn't need an exploit, just a default password.
+- The attack finishes in seconds and runs from home-broadband IPs that don't look like attack infrastructure.
+- Any Linux box, router or IoT device left with default SSH credentials is a candidate, and losing a messaging account or an SMS channel is harder to undo than removing a cryptominer.
+
+**Vulnerability:**
+- No CVE application. This attack exploits a configuration weakness, not a software flaw.
+- *CWE-1392: Use of Default Credentials* and *CWE-521: Weak Password Requirements* [3]. The technique is documented as MITRE ATT&CK T1078.001 [4].
+
+**Purpose:**
+- The script inventories a target for theft and abuse:
+    1. *Telegram account takeover.* It looks for `tdata` to copy and reuse the session from the attacker's machine. The ISC diary calls this a long-term asset, compared with the short-term gain of cryptojacking [1].
+    2. *SMS/cellular abuse.* It looks for GSM/LTE modems and SMS daemons, which can send spam or intercept SMS codes and so defeat SMS-based 2FA and password resets [1].
+    3. *Router recruitment.* It identifies MikroTik devices, which are common botnet targets.
+    4. *Resource triage.* It checks the CPU and looks for competing miners before deciding whether the machine is worth mining on.
+
+**Automation:**
+- The nine commands ran at a steady interval, about 0.43 s apart in one session and 0.68 s in the other. Each command ran over its own SSH exec channel, where a person typing would use one interactive shell.
+- The command list was identical across IPs, dates and credentials. The bot ran the `tdata` and modem checks after `/ip cloud print` had already failed, which indicates an automated script and not a human.
+
+**Would it succeed against a vulnerable system?**
+- Yes, for reconnaissance; theft would be the next step.
+- On a device that accepts default credentials and has Telegram Desktop or an SMS modem, this script would find them. The ISC diary concludes that the likely next step is to compress and upload the session data [1]; this bot never reached that step.
+- The script itself is built well: it probes MikroTik, Linux servers and cellular IoT devices in one pass and tolerates failed commands. Nothing suggests the attacker made a mistake.
+
+**Honeypot detection:**
+- The last command, `echo Hi | cat -n`, has no use except checking the shell's behavior. Real GNU `cat -n` prints the line number, a *tab* and the text (`     1\tHi`). Cowrie's recorded reply (Exhibit 3b) uses *two spaces* instead of the tab (`20 20` rather than `09`) and sends the number and the text as separate writes. A script comparing the reply byte for byte would see the difference.
+- Two other giveaways appear in the evidence: Cowrie returned byte-identical `ifconfig` and `/proc/cpuinfo` output to both visitors, and the emulated IPv6 address uses `fe77::`, which isn't a valid link-local prefix (real ones start with `fe80::`). Both bots disconnected without any further action.The ISC diary describes this command as shell verification [1].
+- Because every file check had already come back empty, the bot had no target data to pursue regardless of how it scored the reply.
+
+**Prevention:**
+- No software upgrade fixes this, because the vulnerable component is the configuration, not a version.
 
 | Layer | Control | Prevents | MITRE mitigation [4] |
 |---|---|---|---|
