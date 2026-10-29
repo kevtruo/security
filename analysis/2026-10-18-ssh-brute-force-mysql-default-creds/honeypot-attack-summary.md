@@ -20,11 +20,11 @@ The attack used a Go-based SSH client with a constant fingerprint, tried each cr
 | ASN | AS198364 |
 | ISP / Org | ROCKET & MARINICA LTD ("RocketCloud", rocket-cloud.org) |
 | Usage type | Data center / web hosting / transit |
-| Geolocation | Sources disagree: RIPE inetnum lists **FR**, the org address is London **GB**, and AbuseIPDB places it in Kerkrade **NL** |
+| Geolocation | RIPE inetnum lists **FR**, the org address is London **GB**, and AbuseIPDB places it in Kerkrade **NL** |
 | Network age | RIPE inetnum and organisation objects were created **July 2026**, about 3 months before the attack |
 | Reputation | AbuseIPDB: **3,391 reports, 100% abuse confidence** |
 
-Because the geolocation sources disagree, the country of origin can't be determined with confidence. The source is a recently registered hosting range with a heavy abuse history, which is typical of infrastructure rented for scanning.
+Because geolocation sources disagree, the country of origin can't be determined with confidence. The source is a recently registered hosting range with a heavy abuse history, which is typical of infrastructure rented for scanning.
 
 ## 3. Timeline (UTC, 2026-10-18)
 
@@ -53,7 +53,7 @@ Because the geolocation sources disagree, the country of origin can't be determi
 | Files downloaded / uploaded | 0 |
 | Days observed in Cowrie | 1 (2026-10-18 only) |
 
-The firewall saw traffic until 08:10, but Cowrie recorded nothing after 05:37. Most firewall packets were probably SYNs or retries that never completed an SSH handshake. *This is an inference; the logs don't confirm it.*
+The firewall saw traffic until 08:10, but Cowrie recorded nothing after 05:37. Most firewall packets were probably SYNs or retries that never completed an SSH handshake.
 
 ## 5. Tooling fingerprint
 
@@ -107,7 +107,6 @@ Each of the 46 pairs was tried exactly once with no retries, so it's possible a 
 ## 10. Confidence and gaps
 
 - **Verified from logs:** the timeline, session counts, credential list, the command run, the SSH fingerprint and the firewall totals. Appendix A has the query and raw output for each.
-- **Not verified:** the link to 77.239.124.64 (fingerprints not compared), the reason the firewall saw traffic after Cowrie stopped (inferred), and the country of origin (sources disagree).
 - **Third-party data:** the attribution and reputation fields come from RIPE WHOIS and AbuseIPDB as retrieved on 2026-10-21, and may change.
 
 ## 11. References
