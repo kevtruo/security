@@ -2,15 +2,17 @@
 
 | | |
 |---|---|
-| **Date** | 2026-10-21 (attack observed 2026-10-18 UTC)
+| **Date** | 2026-10-21 (attack observed 2026-10-18 UTC) |
 | **Sensor** | DShield honeypot (Cowrie) on a cloud VM |
 | **Data sources** | Cowrie JSON logs, DShield firewall log, Cowrie TTY recording, AbuseIPDB, RIPE WHOIS |
 
 ## 1. Summary
 
-On 2026-10-18, 77.239.124.204 ran an automated SSH brute-force attack against the honeypot. It tried 46 username/password pairs over about 10 minutes. The 46th, `mysql/mysql`, succeeded. Six seconds later the attacker ran a single system-fingerprinting command (`uname -s -v -n -r -m`) and disconnected. It downloaded no malware and set up no persistence.
-
-The attack used a Go-based SSH client with a constant fingerprint, tried each credential pair once from a mixed wordlist, and left right after reconnaissance. Together these point to a large, automated credential-validation botnet, not a targeted, single-operator intrusion. A neighboring address in the same /24 subnet (77.239.124.64) attacked with almost identical volume the next day.
+- On 2026-10-18, `77.239.124.204` ran an automated SSH brute-force attack against the honeypot.
+- It tried 46 username/password pairs in about 10 minutes; `mysql/mysql` succeeded.
+- After logging in it ran one fingerprinting command (`uname`) and disconnected 10 seconds later, with no download or persistence.
+- A constant Go SSH client fingerprint and a one-try-per-pair wordlist point to an automated credential-validation botnet.
+- A neighboring address in the same /24 (`77.239.124.64`) sent near-identical traffic the next day.
 
 ## 2. Attacker attribution
 
@@ -20,11 +22,12 @@ The attack used a Go-based SSH client with a constant fingerprint, tried each cr
 | ASN | AS198364 |
 | ISP / Org | ROCKET & MARINICA LTD ("RocketCloud", rocket-cloud.org) |
 | Usage type | Data center / web hosting / transit |
-| Geolocation | RIPE inetnum lists **FR**, the org address is London **GB**, and AbuseIPDB places it in Kerkrade **NL** |
-| Network age | RIPE inetnum and organisation objects were created **July 2026**, about 3 months before the attack |
-| Reputation | AbuseIPDB: **3,391 reports, 100% abuse confidence** |
+| Geolocation | Disputed: FR (RIPE), GB (organisation address), NL (AbuseIPDB) |
+| Network age | Registered July 2026, about 3 months before the attack |
+| Reputation | AbuseIPDB: 3,391 reports, 100% abuse confidence |
 
-Because geolocation sources disagree, the country of origin can't be determined with confidence. The source is a recently registered hosting range with a heavy abuse history, which is typical of infrastructure rented for scanning.
+- A recently registered hosting range with a heavy abuse history, typical of rented scanning infrastructure.
+- The country of origin can't be determined because the sources disagree.
 
 ## 3. Timeline (UTC, 2026-10-18)
 
@@ -34,7 +37,7 @@ Because geolocation sources disagree, the country of origin can't be determined 
 | 05:27:22 | Cowrie | First connection; closes immediately (port check) |
 | 05:27:47 | Cowrie | First failed login (`root`) |
 | 05:30:04 onward | Cowrie | Parallel SSH sessions opened every 2–5 seconds |
-| **05:30:23** | Cowrie | **Successful login: `mysql` / `mysql`** (session `cadf2304c7ee`) |
+| 05:30:23 | Cowrie | Successful login: `mysql` / `mysql` (session `cadf2304c7ee`) |
 | 05:30:29 | Cowrie | Command executed: `uname -s -v -n -r -m` |
 | 05:30:33 | Cowrie | Session `cadf2304c7ee` closed (10 seconds after login) |
 | 05:30:32 – 05:37:03 | Cowrie | Brute force continues on other sessions (`root`, `admin`, `devops`, …) |
@@ -53,7 +56,7 @@ Because geolocation sources disagree, the country of origin can't be determined 
 | Files downloaded / uploaded | 0 |
 | Days observed in Cowrie | 1 (2026-10-18 only) |
 
-The firewall saw traffic until 08:10, but Cowrie recorded nothing after 05:37. Most firewall packets were probably SYNs or retries that never completed an SSH handshake.
+- Firewall traffic continued until 08:10, after Cowrie activity ended at 05:37; these were most likely connection attempts that never completed an SSH handshake.
 
 ## 5. Tooling fingerprint
 
@@ -62,18 +65,20 @@ The firewall saw traffic until 08:10, but Cowrie recorded nothing after 05:37. M
 | SSH client version | `SSH-2.0-Go` | 46 / 46 |
 | HASSH | `16443846184eafde36765c9bab2f4397` | 46 / 46 |
 
-The `SSH-2.0-Go` banner shows a custom tool built on Go's `golang.org/x/crypto/ssh` library rather than a standard client such as OpenSSH. The identical HASSH across every handshake shows a single automated tool.
+- `SSH-2.0-Go` indicates a custom tool built on Go's SSH library, not OpenSSH.
+- The same HASSH on every handshake indicates a single automated tool.
 
 ## 6. Credentials attempted
 
-Each of the 46 pairs was tried exactly once with no retries, a pattern consistent with a shared wordlist split across bot nodes.
-
 | Category | Examples |
 |---|---|
-| Service accounts | **`mysql/mysql` (success)**, `ftpuser/qwer1234`, `ftpuser2/ftpuser2`, `cacti/cacti`, `deploy/123123`, `devops/admin`, `www/123456` |
+| Service accounts | `mysql/mysql` (success), `ftpuser/qwer1234`, `ftpuser2/ftpuser2`, `cacti/cacti`, `deploy/123123`, `devops/admin`, `www/123456` |
 | Embedded / IoT boards | `pi/toor` (Raspberry Pi), `admin/linaro` and `newuser/linaro` (Linaro ARM images), `forlinx/root` (Forlinx SoMs), `Tronlong/default` (Tronlong boards) |
 | Weak root passwords | `root/P@ssw0rd123`, `root/Admin@123456`, `root/1qaz@WSX`, `root/123qweASD`, `root/root1234`, `root/kali`, `root/jboss` |
 | Generic / other | `ubuntu/ubuntu2026`, `user/user@123`, `admin/123456789`, `tom/tom`, `tactical/tactical` |
+
+- Each pair was tried once, consistent with a shared wordlist split across bot nodes.
+- Full list: Exhibit 2.
 
 ## 7. MITRE ATT&CK mapping
 
@@ -86,19 +91,18 @@ Each of the 46 pairs was tried exactly once with no retries, a pattern consisten
 
 ## 8. Analysis
 
-**Purpose:** The attacker left right after `uname`. It recorded OS, kernel, hostname and CPU architecture, which a later stage could use to pick a matching payload; access could also be resold.
+**Purpose:**
+- Validate working credentials and fingerprint the system (OS, kernel, architecture) for a later payload or for resale.
 
 **Automation:**
-- The parallel sessions, constant 2–5 second cadence and single-attempt wordlist indicate that an automated tool was used.
-- The identical Go SSH library fingerprint across every handshake (section 5) points to the same conclusion.
+- Parallel sessions every 2–5 seconds, one attempt per credential pair, and an identical Go client fingerprint (section 5).
 
 **Coordinated infrastructure:**
-- The neighboring IP `77.239.124.64` sent almost the same firewall traffic (1,498 packets, all TCP/22) and generated 4,848 Cowrie log lines on 2026-10-19.
-- Two addresses in the same newly allocated /24 attacking on consecutive days indicates a single operation.
-- This attribution rests on network and traffic similarity; the SSH client fingerprints of the two addresses were not compared.
+- `77.239.124.64`, in the same newly allocated /24, sent near-identical traffic on 2026-10-19: 1,498 packets to TCP/22 and 4,848 Cowrie log lines.
+- This indicates a single operation, based on network and traffic similarity; the SSH fingerprints were not compared.
 
 **Separate actor:**
-- The `sshd` malware drop and the 30 MB upload on the same day came from `114.130.253.3`, a different actor, and are not covered in this report.
+- An `sshd` malware upload the same day came from `114.130.253.3`, a different actor, and is not covered in this report.
 
 ## 9. Indicators of compromise
 
@@ -115,8 +119,11 @@ Each of the 46 pairs was tried exactly once with no retries, a pattern consisten
 
 ## 10. Confidence and gaps
 
-- **Verified from logs:** the timeline, session counts, credential list, the command run, the SSH fingerprint and the firewall totals. Appendix A has the query and raw output for each.
-- **Third-party data:** the attribution and reputation fields come from RIPE WHOIS and AbuseIPDB as retrieved on 2026-10-21, and may change.
+**Verified from logs:**
+- Timeline, session counts, credentials, the command run, the SSH fingerprint and firewall totals (Appendix A).
+
+**Third-party data:**
+- RIPE WHOIS and AbuseIPDB fields retrieved 2026-10-21; may change.
 
 ## 11. References
 
