@@ -12,7 +12,7 @@ Nothing here is a live configuration. Notes describe patterns and decisions, not
 | Path | Contents |
 |---|---|
 | [`homelab/`](homelab/) | Homelab security write-ups, grouped by initiative |
-| [`analysis/`](analysis/) | One folder per attack observation, holding its `honeypot-attack-summary.md` and all supporting evidence |
+| [`analysis/`](analysis/) | One folder per attack observation, holding its `honeypot-attack-summary.md` (start from [`templates/honeypot-attack-summary.md`](templates/honeypot-attack-summary.md)) and all supporting evidence |
 | [`templates/`](templates/) | Starting points for new notes |
 
 ## Status markers
