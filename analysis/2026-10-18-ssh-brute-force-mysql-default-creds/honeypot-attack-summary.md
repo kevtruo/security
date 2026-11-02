@@ -86,10 +86,19 @@ Each of the 46 pairs was tried exactly once with no retries, a pattern consisten
 
 ## 8. Analysis
 
-- **Purpose:** The attacker left right after `uname`. It recorded OS, kernel, hostname and CPU architecture, which a later stage could use to pick a matching payload; access could also be resold.
-- **Automation:** The parallel sessions, constant 2–5 second cadence, single-attempt wordlist and Go SSH library fingerprint indicate that an automated tool was used.
-- **Coordinated infrastructure:** The neighboring IP **77.239.124.64** sent almost the same firewall traffic (1,498 packets, all TCP/22) and generated 4,848 Cowrie log lines on 2026-10-19. Two addresses in the same newly allocated /24 attacking on consecutive days indicates a single operation. This attribution rests on network and traffic similarity; the SSH client fingerprints of the two addresses were not compared.
-- **Separate actor:** The `sshd` malware drop and the 30 MB upload on the same day came from **114.130.253.3**, a different actor, and are not covered in this report.
+**Purpose:** The attacker left right after `uname`. It recorded OS, kernel, hostname and CPU architecture, which a later stage could use to pick a matching payload; access could also be resold.
+
+**Automation:**
+- The parallel sessions, constant 2–5 second cadence and single-attempt wordlist indicate that an automated tool was used.
+- The identical Go SSH library fingerprint across every handshake (section 5) points to the same conclusion.
+
+**Coordinated infrastructure:**
+- The neighboring IP `77.239.124.64` sent almost the same firewall traffic (1,498 packets, all TCP/22) and generated 4,848 Cowrie log lines on 2026-10-19.
+- Two addresses in the same newly allocated /24 attacking on consecutive days indicates a single operation.
+- This attribution rests on network and traffic similarity; the SSH client fingerprints of the two addresses were not compared.
+
+**Separate actor:**
+- The `sshd` malware drop and the 30 MB upload on the same day came from `114.130.253.3`, a different actor, and are not covered in this report.
 
 ## 9. Indicators of compromise
 
