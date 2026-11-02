@@ -2,6 +2,11 @@
 Template for analysis/YYYY-MM-DD-short-topic/honeypot-attack-summary.md
 
 - Folder name: the first-seen attack date plus a short topic. Evidence files sit in the same folder.
+- Level: mid-to-high. State what happened, why it matters and what stops it. The technical dive
+  (payloads, byte-level detail, full lists) lives in the exhibits; point to them ("Exhibit 3").
+- Format: short bullets, one point each. No paragraphs of prose.
+- Bold: only for standalone label lines such as **Relevance:**. Never bold words inside a sentence,
+  a bullet or a table cell; it gets lost when rendered.
 - Voice: finished public report. No draft notes such as "this is an inference", no first or second person.
   State assessments directly ("consistent with", "likely") and list their basis under Confidence and gaps.
 - Public safety: attacker IPs may be published as indicators. Nothing that identifies the sensor:
@@ -19,7 +24,12 @@ Template for analysis/YYYY-MM-DD-short-topic/honeypot-attack-summary.md
 
 ## 1. Summary
 
-<Two or three short paragraphs: who attacked, what they did, what happened, and the single most important finding.>
+- <What happened: who, when, how.>
+- <What the attacker did after getting in, or what the requests attempted.>
+- <The single most important finding.>
+- <Whether this is a one-off or part of a wider campaign.>
+
+<For several distinct attacks, give each a label line (**<Attack name>:**) followed by its bullets.>
 
 ## 2. Attacker attribution
 
@@ -32,7 +42,7 @@ Template for analysis/YYYY-MM-DD-short-topic/honeypot-attack-summary.md
 | Geolocation | <country; note disagreement between sources> |
 | Reputation | <SANS ISC / AbuseIPDB results> |
 
-<One or two sentences interpreting the source network. For several sources, use one column per IP or one row per IP.>
+- <One bullet interpreting the source network.>
 
 ## 3. Timeline (UTC)
 
@@ -58,11 +68,15 @@ Template for analysis/YYYY-MM-DD-short-topic/honeypot-attack-summary.md
 | <SSH client version / user agent> | <value> | <n / n> |
 | <HASSH / other fingerprint> | <value> | <n / n> |
 
-<One sentence on what the fingerprint indicates.>
+- <What the fingerprint indicates, in one bullet.>
 
 ## 6. <Credentials attempted / Commands executed / Exploits attempted>
 
-<Table of what the attacker tried, with a short explanation of each item and, for exploits, the CVE.>
+| <Item> | <Purpose / CVE> |
+|---|---|
+| <credential, command or request> | <one-line explanation> |
+
+- <Full list or raw output: Exhibit n.>
 
 ## 7. MITRE ATT&CK mapping
 
@@ -77,23 +91,23 @@ Template for analysis/YYYY-MM-DD-short-topic/honeypot-attack-summary.md
 - <Who is exposed and what they stand to lose.>
 
 **Vulnerability:**
-- <The CVE(s), or "No CVE applies" with the CWE for a configuration weakness.>
-- <What the flaw does and which version fixes it.>
+- <CVE and fixed version, or "No CVE" with the CWE for a configuration weakness.>
 
-**Purpose:** <One or two sentences on the attacker's goal, citing a source where the goal is not directly observed.>
+**Purpose:**
+- <The attacker's goal, citing a source where it is not directly observed.>
 
 **Automation:**
-- <Evidence that the attack is scripted or hands-on: timing, ordering, fingerprints, repetition across sources.>
+- <Evidence that the attack is scripted or hands-on.>
 
 **Would it succeed against a vulnerable system?**
 - <Yes/no for a vulnerable target, and what that target looks like.>
-- <Whether the attacker made mistakes, and why it did not succeed against the sensor.>
+- <Why it did not succeed against the sensor.>
 
-**<Notable detail, for example Honeypot detection or Request in detail>:**
-- <Optional block for a finding specific to this attack.>
+**<Notable detail, for example Honeypot detection>:**
+- <Optional block for a finding specific to this attack; point to the exhibit for detail.>
 
 **Prevention:**
-- <One-line framing, for example whether patching or configuration is the fix.>
+- <One-line framing: patching, configuration, or both.>
 
 | Layer | Control | Prevents | MITRE mitigation |
 |---|---|---|---|
@@ -107,10 +121,17 @@ Template for analysis/YYYY-MM-DD-short-topic/honeypot-attack-summary.md
 
 ## 10. Confidence and gaps
 
-- **Verified from logs:** <what the evidence shows directly. Appendix A has the query and output for each.>
-- **Assessed from indirect evidence:** <each assessment and its basis.>
-- **<Retention or capture limits>:** <what the logs could not show.>
-- **Third-party data:** <sources and retrieval date; may change.>
+**Verified from logs:**
+- <What the evidence shows directly (Appendix A).>
+
+**Assessed from indirect evidence:**
+- <Each assessment and its basis.>
+
+**<Retention or capture limits>:**
+- <What the logs could not show.>
+
+**Third-party data:**
+- <Sources and retrieval date; may change.>
 
 ## 11. References
 
